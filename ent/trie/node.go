@@ -3,34 +3,38 @@ package trie
 import treeout "github.com/shivamMg/ppds/tree"
 
 type node struct {
-	letter   byte
-	boundry  bool
-	parent   *node
-	children map[byte]*node
-	link     *node
-	linkDict *node
+	letter      byte
+	patternEnd  bool
+	parent      *node
+	children    map[byte]*node
+	linkFailure *node
+	linkDict    *node
 }
 
 func newNode(b byte, boundry bool, parent *node) *node {
 	return &node{
-		letter:   b,
-		parent:   parent,
-		children: make(map[byte]*node),
-		boundry:  boundry,
+		letter:     b,
+		parent:     parent,
+		children:   make(map[byte]*node),
+		patternEnd: boundry,
 	}
 }
 
+// Data is used for pretty-printing the trie content. Returns a string
+// representation of a node.
 func (n *node) Data() interface{} {
 	res := string(n.letter)
-	if n.boundry {
+	if n.patternEnd {
 		res += "*"
 	}
 	if n.linkDict != nil {
 		res += "|"
 	}
-	return res + "->" + string(n.link.letter)
+	return res + "->" + string(n.linkFailure.letter)
 }
 
+// Children is used for pretty-printing trie content. Returns children of a
+// node.
 func (n *node) Children() []treeout.Node {
 	var res []treeout.Node
 	for _, v := range n.children {

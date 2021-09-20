@@ -1,39 +1,39 @@
 package trie
 
-func (t *trie) createLinks(n *node) {
+func (t *trie) createFailureLinks(n *node) {
 	path := []*node{n}
 	for n.parent != nil {
 		path = append(path, n.parent)
 		n = n.parent
 	}
 
-	t.traverseLinks(path[:len(path)-2])
+	t.traverseNodes(path[:len(path)-2])
 }
 
-func (t *trie) traverseLinks(path []*node) {
+func (t *trie) traverseNodes(path []*node) {
 	for i, j := 0, len(path)-1; i < j; i, j = i+1, j-1 {
 		path[i], path[j] = path[j], path[i]
 	}
 	i := 0
 	length := len(path)
 	for i < length {
-		t.checkLink(path[:length-i])
+		t.findFalureLink(path[:length-i])
 		i++
 	}
 }
 
-func (t *trie) checkLink(path []*node) {
+func (t *trie) findFalureLink(path []*node) {
 	n := t.root
 	i := 0
 	length := len(path)
 	// check full path, then, if wrong, remove one byte until
-	// works
+	// link is found
 Outer:
 	for i < length {
-		path = path[i:]
-		s := nodesToString(path)
+		suffix := path[i:]
+		s := nodesToString(suffix)
 		_ = s
-		for _, v := range path {
+		for _, v := range suffix {
 			var child *node
 			var ok bool
 			char := v.letter
@@ -47,5 +47,5 @@ Outer:
 		break
 	}
 	nodeToLink := path[len(path)-1]
-	nodeToLink.link = n
+	nodeToLink.linkFailure = n
 }

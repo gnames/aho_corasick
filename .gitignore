@@ -1,0 +1,11 @@
+debug.test
+coverage.txt
+bench*.txt
+t
+t.json
+*.pprof
+*.trace
+*.test
+*.out
+.idea
+.vscode

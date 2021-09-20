@@ -13,14 +13,16 @@ func New() AhoCorasick {
 	return &ahoco{}
 }
 
-func (ac *ahoco) Setup(patterns []string) {
+func (ac *ahoco) Setup(patterns []string) int {
 	ac.tr = trie.New(patterns)
+	return ac.tr.NodesNum()
 }
 
-func (ac *ahoco) Search(haystack string, uniq bool) []match.Match {
+func (ac *ahoco) Search(haystack string) []match.Match {
+	return ac.tr.Search(haystack)
+}
+
+func (ac *ahoco) SearchUniq(haystack string) []match.Match {
 	matches := ac.tr.Search(haystack)
-	if uniq {
-		matches = match.Uniq(matches)
-	}
-	return matches
+	return match.Uniq(matches)
 }

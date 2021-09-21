@@ -11,7 +11,7 @@ type Pos struct {
 }
 
 func New(pattern string, index, end int) Match {
-	start := end - len(pattern)
+	start := end - len(pattern) + 1
 	return Match{
 		Pattern:      pattern,
 		PatternIndex: index,

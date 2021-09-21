@@ -1,11 +1,13 @@
 package aho_corasick_test
 
 import (
+	"fmt"
 	"os"
 	"strings"
 	"testing"
 
 	"github.com/gnames/aho_corasick"
+	"github.com/gnames/aho_corasick/ent/match"
 	"github.com/stretchr/testify/assert"
 )
 
@@ -30,8 +32,23 @@ func TestSetup(t *testing.T) {
 func TestSearch(t *testing.T) {
 	ac := aho_corasick.New()
 	ac.Setup([]string{"aba", "cla", "ac", "gee", "lan"})
-	matches := ac.Search("aclant")
-	assert.Equal(t, len(matches), 3)
+	haystack := "abacgeeaba"
+	ac.Debug(haystack)
+	matches := ac.Search(haystack)
+	assert.Equal(t, len(matches), 4)
+
+	res := []match.Match{
+		{Pattern: "aba", Pos: &match.Pos{Start: 0, End: 2}, PatternIndex: 0},
+		{Pattern: "ac", Pos: &match.Pos{Start: 2, End: 3}, PatternIndex: 2},
+		{Pattern: "gee", Pos: &match.Pos{Start: 4, End: 6}, PatternIndex: 3},
+		{Pattern: "aba", Pos: &match.Pos{Start: 7, End: 9}, PatternIndex: 0},
+	}
+	for i, v := range matches {
+		assert.Equal(t, v.Pattern, res[i].Pattern)
+		assert.Equal(t, v.Start, res[i].Start)
+		assert.Equal(t, v.End, res[i].End)
+		assert.Equal(t, v.PatternIndex, res[i].PatternIndex)
+	}
 }
 
 func TestLargeTree(t *testing.T) {
@@ -47,7 +64,7 @@ func TestLargeTree(t *testing.T) {
 		msg, haystack string
 		lenRes        int
 	}{
-		{"1", "aclant", 7},
+		{"1", "aclant", 8},
 		{"2", "888adedbofdjdrdpehdpclpidpnaioe333", 30},
 	}
 
@@ -55,4 +72,33 @@ func TestLargeTree(t *testing.T) {
 		matches := ac.Search(v.haystack)
 		assert.Equal(t, len(matches), v.lenRes, v.msg)
 	}
+}
+
+func Example() {
+	// create AhoCorasick instance
+	ac := aho_corasick.New()
+	// initialize it with string patterns that need to be matched
+	ac.Setup([]string{"aba", "cla", "ac", "gee", "lan"})
+
+	// Search for the patterns, providing information of a start and end
+	// positions for every found pattern
+	matches := ac.Search("aclant")
+	fmt.Printf(
+		"Pattern: %s, Pos: %d:%d\n",
+		matches[0].Pattern,
+		matches[0].Start,
+		matches[0].End+1,
+	)
+
+	// Search and return a unique list of matched patterns
+	matchesUnique := ac.SearchUniq("abacgeeaba")
+	patterns := make([]string, len(matchesUnique))
+	for i, v := range matchesUnique {
+		patterns[i] = v.Pattern
+	}
+	fmt.Printf("Patterns: %s", strings.Join(patterns, ", "))
+
+	// Output:
+	// Pattern: ac, Pos: 0:2
+	// Patterns: aba, ac, gee
 }

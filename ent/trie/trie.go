@@ -50,9 +50,9 @@ func (t *trie) Search(haystack string) []match.Match {
 			cursor = cursor.linkFailure
 			// if char is not found in the node children, check failure links, unil
 			// getting to one that allows next move, or one that hits root node.
-			for cursor.letter != t.root.letter {
+			for {
 				found, cursor = t.findChild(cursor, l, i)
-				if found {
+				if found || cursor == t.root {
 					break
 				} else {
 					cursor = cursor.linkFailure

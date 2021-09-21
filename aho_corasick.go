@@ -26,3 +26,7 @@ func (ac *ahoco) SearchUniq(haystack string) []match.Match {
 	matches := ac.tr.Search(haystack)
 	return match.Uniq(matches)
 }
+
+func (ac *ahoco) Debug(haystack string) {
+	ac.tr.Debug(haystack)
+}

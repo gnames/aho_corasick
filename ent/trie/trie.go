@@ -18,6 +18,8 @@ type trie struct {
 	matches []match.Match
 }
 
+// New takes a list of substrings for matching (patterns) and uses
+// them to generate the functional instance of a suffix tree (trie).
 func New(patterns []string) Trie {
 	res := trie{root: newNode(nil, false, nil)}
 	res.build(patterns)
@@ -25,10 +27,13 @@ func New(patterns []string) Trie {
 	return &res
 }
 
+// NodeNum returns the number of nodes in the trie not counting the root
+// node.
 func (t *trie) NodesNum() int {
 	return len(t.nodes)
 }
 
+// Debug pretty-prints the resulting tree.
 func (t *trie) Debug(haystack string) {
 	fmt.Print("\n\n******* Trie *******\n\n")
 	fmt.Printf("haystack: %s\n\n", haystack)
@@ -36,6 +41,8 @@ func (t *trie) Debug(haystack string) {
 	fmt.Print("\n********************\n")
 }
 
+// Search takes a strings (haystack) and matches the string to the previously
+// supplied slice of substrings (patterns).
 func (t *trie) Search(haystack string) []match.Match {
 	haystackBytes := []byte(haystack)
 	var found bool

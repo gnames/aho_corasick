@@ -3,7 +3,7 @@ package trie
 import treeout "github.com/shivamMg/ppds/tree"
 
 type node struct {
-	letter      byte
+	letter      *byte
 	patternEnd  bool
 	parent      *node
 	children    map[byte]*node
@@ -11,7 +11,7 @@ type node struct {
 	linkDict    *node
 }
 
-func newNode(b byte, boundry bool, parent *node) *node {
+func newNode(b *byte, boundry bool, parent *node) *node {
 	return &node{
 		letter:     b,
 		parent:     parent,
@@ -23,14 +23,21 @@ func newNode(b byte, boundry bool, parent *node) *node {
 // Data is used for pretty-printing the trie content. Returns a string
 // representation of a node.
 func (n *node) Data() interface{} {
-	res := string(n.letter)
+	res := fmtLetter(n.letter)
 	if n.patternEnd {
 		res += "*"
 	}
 	if n.linkDict != nil {
 		res += "|"
 	}
-	return res + "->" + string(n.linkFailure.letter)
+	return res + "->" + fmtLetter(n.linkFailure.letter)
+}
+
+func fmtLetter(b *byte) string {
+	if b == nil {
+		return "root"
+	}
+	return string(*b)
 }
 
 // Children is used for pretty-printing trie content. Returns children of a

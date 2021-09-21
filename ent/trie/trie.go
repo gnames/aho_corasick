@@ -19,7 +19,7 @@ type trie struct {
 }
 
 func New(patterns []string) Trie {
-	res := trie{root: newNode('#', false, nil)}
+	res := trie{root: newNode(nil, false, nil)}
 	res.build(patterns)
 	res.root.linkFailure = res.root
 	return &res
@@ -119,7 +119,7 @@ func (t *trie) buildNode(pattern string) {
 			cursor = n
 			// if not, create the child and move the cursor to it
 		} else {
-			newN := newNode(bs[i], boundry, cursor)
+			newN := newNode(&bs[i], boundry, cursor)
 			cursor.children[bs[i]] = newN
 
 			t.nodes = append(t.nodes, newN)
@@ -156,7 +156,7 @@ func nodesToString(path []*node) string {
 	res := make([]byte, len(path))
 	l := len(path) - 1
 	for i := range path {
-		res[i] = path[l-i].letter
+		res[i] = *path[l-i].letter
 	}
 	return string(res)
 }

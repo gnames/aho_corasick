@@ -31,12 +31,10 @@ func (t *trie) findFalureLink(path []*node) {
 Outer:
 	for i < length {
 		suffix := path[i:]
-		s := nodesToString(suffix)
-		_ = s
 		for _, v := range suffix {
 			var child *node
 			var ok bool
-			char := v.letter
+			char := *v.letter
 			if child, ok = n.children[char]; !ok {
 				n = t.root
 				i++

@@ -29,4 +29,12 @@ type AhoCorasick interface {
 	// haystack string for convenience. This method is not needed for
 	// functionality, but is useful for debugging and development purposes.
 	Debug(haystack string)
+	// Dump serializes tree into a file on a filesystem. It takes a directory
+	// as an argument, and creates ac.gob file there. This file contains data
+	// needed to rebuild the tree.
+	Dump(dir string) error
+	// Load reads an dump file from the filesystem. It takes a directory
+	// as an argument, and reads ac.gob file from it. This file contains data
+	// needed to rebuild the AhoCorasick object.
+	Load(dir string) error
 }

@@ -18,4 +18,6 @@ type Trie interface {
 	NodesNum() int
 	// Debug pretty-prints the resulting tree.
 	Debug(haystack string)
+	// Dump tree to bytes
+	Dump() ([]byte, error)
 }

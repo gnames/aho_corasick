@@ -4,6 +4,7 @@ go 1.17
 
 require (
 	github.com/gnames/gnfmt v0.2.0
+	github.com/gnames/gnsys v0.2.2
 	github.com/shivamMg/ppds v0.0.1
 	github.com/stretchr/testify v1.7.0
 )

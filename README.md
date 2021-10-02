@@ -19,7 +19,8 @@ implemented.
 ## Installation
 
 The Go module is installable by running:
-```
+
+```bash
 go get github.com/gnames/aho_corasick
 ```
 
@@ -46,7 +47,7 @@ are welcome.
 
 Tests can be run with `go test` which will produce a text visual of the trie:
 
-```
+```text
 ******* Trie *******
 
 haystack: abacgeeaba
@@ -74,7 +75,6 @@ patterns := []string{"aba", "cla", "ac", "gee", "lan"}
 ac.Setup(patterns)
 ac.Debug(haystack)
 ```
-
 
 ## License
 

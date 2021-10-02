@@ -15,6 +15,9 @@ func TestBig(t *testing.T) {
 	txt, err := os.ReadFile("testdata/patterns.txt")
 	assert.Nil(t, err)
 	patterns := strings.Split(string(txt), "\n")
+  for i := range patterns {
+    patterns[i] = strings.TrimSpace(patterns[i])
+  }
 
 	ac := aho_corasick.New()
 	ac.Setup(patterns)

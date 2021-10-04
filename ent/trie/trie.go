@@ -116,17 +116,20 @@ func (t *trie) buildNode(pattern string) {
 	cursor := t.root
 
 	for i := range bs {
-		var boundry bool
+		var patternEnd bool
 		if i == len(bs)-1 {
-			boundry = true
+			patternEnd = true
 		}
 
 		// if a child for a letter already exists, move the cursor to the child
 		if n, ok := cursor.children[bs[i]]; ok {
 			cursor = n
+			if patternEnd {
+				cursor.patternEnd = patternEnd
+			}
 			// if not, create the child and move the cursor to it
 		} else {
-			newN := newNode(&bs[i], boundry, cursor)
+			newN := newNode(&bs[i], patternEnd, cursor)
 			cursor.children[bs[i]] = newN
 
 			t.nodes = append(t.nodes, newN)

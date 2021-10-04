@@ -12,7 +12,7 @@ import (
 )
 
 func TestBig(t *testing.T) {
-	txt, err := os.ReadFile("testdata/patterns.txt")
+	txt, err := os.ReadFile("testdata/patterns_big.txt")
 	assert.Nil(t, err)
 	patterns := strings.Split(string(txt), "\n")
   for i := range patterns {

@@ -24,17 +24,17 @@ func New(patterns []string) Trie {
 	res := trie{root: newNode(nil, false, nil)}
 	res.build(patterns)
 	res.root.linkFailure = res.root
-	return &res
+	return res
 }
 
 // NodeNum returns the number of nodes in the trie not counting the root
 // node.
-func (t *trie) NodesNum() int {
+func (t trie) NodesNum() int {
 	return len(t.nodes)
 }
 
 // Debug pretty-prints the resulting tree.
-func (t *trie) Debug(haystack string) {
+func (t trie) Debug(haystack string) {
 	fmt.Print("\n\n******* Trie *******\n\n")
 	fmt.Printf("haystack: %s\n\n", haystack)
 	treeout.PrintHr(t.root)
@@ -43,7 +43,7 @@ func (t *trie) Debug(haystack string) {
 
 // Search takes a strings (haystack) and matches the string to the previously
 // supplied slice of substrings (patterns).
-func (t *trie) Search(haystack string) []match.Match {
+func (t trie) Search(haystack string) []match.Match {
 	haystackBytes := []byte(haystack)
 	var found bool
 	cursor := t.root

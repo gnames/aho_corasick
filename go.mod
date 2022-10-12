@@ -3,7 +3,6 @@ module github.com/gnames/aho_corasick
 go 1.17
 
 require (
-	4d63.com/strrev v1.1.0
 	github.com/shivamMg/ppds v0.0.1
 	github.com/stretchr/testify v1.7.0
 )

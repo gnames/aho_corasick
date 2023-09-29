@@ -2,7 +2,7 @@ package trie_test
 
 import (
 	"fmt"
-	"sort"
+	"slices"
 	"testing"
 
 	triepkg "github.com/gnames/aho_corasick/ent/trie"
@@ -21,7 +21,7 @@ func TestFailLinks(t *testing.T) {
 	for i := range matches {
 		res[i] = matches[i].Pattern
 	}
-	sort.Strings(res)
+	slices.Sort(res)
 	assert.Equal(t, res, []string{"ATC", "CAT"})
 }
 
@@ -38,6 +38,6 @@ func TestDictLinks(t *testing.T) {
 	for i := range matches {
 		res[i] = matches[i].Pattern
 	}
-	sort.Strings(res)
+	slices.Sort(res)
 	assert.Equal(t, res, []string{"A", "A", "C", "CAA", "GC", "GCA"})
 }

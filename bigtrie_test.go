@@ -2,7 +2,7 @@ package aho_corasick_test
 
 import (
 	"os"
-	"sort"
+	"slices"
 	"strings"
 	"testing"
 
@@ -15,9 +15,9 @@ func TestBig(t *testing.T) {
 	txt, err := os.ReadFile("testdata/patterns_big.txt")
 	assert.Nil(t, err)
 	patterns := strings.Split(string(txt), "\n")
-  for i := range patterns {
-    patterns[i] = strings.TrimSpace(patterns[i])
-  }
+	for i := range patterns {
+		patterns[i] = strings.TrimSpace(patterns[i])
+	}
 
 	ac := aho_corasick.New()
 	ac.Setup(patterns)
@@ -47,13 +47,13 @@ func matchToStr(matches []match.Match) []string {
 		resMap[v.Pattern] = struct{}{}
 	}
 
-  res := make([]string, len(resMap))
-  var count int
-  for k := range resMap{
-    res[count] = k
-    count++
-  }
-	sort.Strings(res)
+	res := make([]string, len(resMap))
+	var count int
+	for k := range resMap {
+		res[count] = k
+		count++
+	}
+	slices.Sort(res)
 	return res
 }
 

@@ -1,10 +1,10 @@
 module github.com/gnames/aho_corasick
 
-go 1.19
+go 1.21
 
 require (
 	github.com/shivamMg/ppds v0.0.1
-	github.com/stretchr/testify v1.8.0
+	github.com/stretchr/testify v1.8.4
 )
 
 require (

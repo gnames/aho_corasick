@@ -1,14 +1,14 @@
 name: Lint
 
-on: 
+on:
   push:
-    branches: [ master ]
+    branches: [master]
 
 jobs:
   lint:
     strategy:
       matrix:
-        go-version: [1.17.x]
+        go-version: [1.23.x]
         platform: [ubuntu-latest]
 
     runs-on: ${{ matrix.platform }}

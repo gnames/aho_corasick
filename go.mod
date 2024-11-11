@@ -1,6 +1,6 @@
 module github.com/gnames/aho_corasick
 
-go 1.21
+go 1.23.2
 
 require (
 	github.com/shivamMg/ppds v0.0.1
